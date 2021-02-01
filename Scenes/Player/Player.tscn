@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Player/HookPoint.gd" type="Script" id=2]
@@ -12,10 +12,14 @@ radius = 0.5
 [sub_resource type="CapsuleShape" id=2]
 radius = 0.5
 
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 1 ), 0.0, -0.881818, 0, 0, Vector2( 1, 0.636364 ), 0.0, 0.0, 0, 0 ]
+
 [sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0766798, 0, 0, Vector2( 1, 1 ), 2.62802e-07, 0.0, 0, 0 ]
 
-[node name="Player" type="KinematicBody"]
+[node name="Player" type="RigidBody"]
+input_ray_pickable = false
 collision_layer = 2
 script = ExtResource( 1 )
 
@@ -74,6 +78,14 @@ position = Vector2( 6, 0 )
 texture = ExtResource( 7 )
 flip_h = true
 
-[node name="GVTween" type="Node" parent="."]
+[node name="FrictionTween" type="Node" parent="."]
+script = ExtResource( 8 )
+_curve = SubResource( 4 )
+
+[node name="FovTween" type="Node" parent="."]
 script = ExtResource( 8 )
 _curve = SubResource( 3 )
+
+[node name="FloorDetecter" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.914, 0 )
+enabled = true
